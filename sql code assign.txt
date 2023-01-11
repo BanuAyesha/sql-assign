@@ -48,3 +48,83 @@ select * from customer
 select * from customer where country  like ('a%') or country like('i%');
 select * from  customer where FirstName like('__i%');
 
+--assignment 2--
+use sqldatabase;
+select*from customer;
+select  country from customer
+where country='norway';
+select FirstName,Lastname,FirstName+''+LastName as FullName from customer;
+
+alter table customer
+add faxnumber nvarchar(50);
+select * from customer;
+update customer set faxnumber=+81-362-456389
+where id=2;
+update customer set  faxnumber=+81-362-653289
+where id=1;
+select * from customer where faxnumber is not null;
+select * from customer where faxnumber is  null;
+
+select * from customer where FirstName like '__r%';
+select * from order orderitem;
+select * from order orders where id is (select orderid from orderitem where unitprice between 106 and 1001);
+alter table orders
+add shippingdetails datetime;
+select * from order;
+update orders
+set shippingdate='2022-09-05';
+where id='120';
+
+update orders
+set shippingdate='2022-09-06';
+where id='121';
+
+update orders
+set shippingdate='2022-09-07';
+where id='122';
+
+update orders
+set shippingdate='2022-09-08';
+where id='123';
+
+select * from order;
+where shippingdate is not null
+order by shippingdate desc;
+alter table orders
+add shipname varchar(50);
+
+select * from orders;
+select * from orderitem;
+select * from product;
+
+upadte orders set shipname='star'
+where id= 120;
+select * from orders where shipname like 'star' and (shippingdate between '2022-09-04' and '2022-09-09');
+select productid,avg(quantity) as average from orderitem
+group by productid;
+alter table orders
+add shippingcompany varchar(40);
+update orders set shippingcompany='flipcart'
+where id='106';
+alter table product
+add discount int;
+update product
+set discount=0
+where  id=106;
+select productname,category,unitprice-discount as price from product;
+select shippingcompany,totalamount as totalprice from orders
+where shippingcompany like 'flipcart' and totalamount > 1000;
+
+--assignment 3--
+select * from orders
+where customer in (select id 
+from customer where phone='9354528237');
+
+select * from product where category='portable';
+
+select * from orders
+where customer in(select id from customer where productid in (select id from product where productname like 'table' ));
+
+
+
+
